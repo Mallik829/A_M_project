@@ -123,12 +123,26 @@ if st.button("Recommend"):
     # Create columns for side-by-side layout
     cols = st.columns(2)
     col_idx = 0
+    genre_cols = [
+        col
+        for col in movies.columns
+        if col not in ["movie_id", "title", "unknown"]
+    ]
     
     for title in results.index:
         col = cols[col_idx % 2]
         
         with col:
-            st.write("🍿", title)
+            movie_genre_row = movies.loc[movies["title"] == title, genre_cols]
+            if not movie_genre_row.empty:
+                genre_list = movie_genre_row.columns[
+                    movie_genre_row.iloc[0] == 1
+                ].tolist()
+                genre_label = ", ".join(genre_list) if genre_list else "Unknown"
+            else:
+                genre_label = "Unknown"
+            
+            st.write("🍿", title, "-", genre_label)
             
             # Get ratings for this specific movie
             movie_ratings = df[df["title"] == title]["rating"]
