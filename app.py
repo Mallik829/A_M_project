@@ -1,8 +1,12 @@
 import streamlit as st
 import pandas as pd
+import gdown
+import pathlib
 
-
+# Google drive file ID: 1LrJnjiM2Ifnztutkq0xAbQk584nz9A1c
 # Load data
+
+
 ratings = pd.read_csv(
     "ml-100k/u.data",
     sep="\t",
