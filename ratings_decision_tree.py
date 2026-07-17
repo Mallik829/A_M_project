@@ -94,8 +94,9 @@ comparison = (
         columns="movie_id",
         values="rating"
     )
-    .fillna(0)
 )
+
+comparison = comparison[seed_ids]
 
 
 # -------------------------------------------------
@@ -111,62 +112,9 @@ user_vector = np.array(
 
 
 
-# -------------------------------------------------
-# Find similar users
-# -------------------------------------------------
-
-similarities = cosine_similarity(
-    user_vector,
-    comparison
-)[0]
-
-
-comparison["similarity"] = similarities
-
-
-nearest_users = (
-    comparison
-    .nlargest(100,"similarity")
-    .index
-)
-
-
-print(
-    f"\nFound {len(nearest_users)} similar users"
-)
-
-
-
-# -------------------------------------------------
-# Train decision tree on similar users
-# -------------------------------------------------
-
-similar_data = df[
-    df["user_id"].isin(nearest_users)
-]
-
-
-X_train = similar_data[
-    [
-        "user_id",
-        "movie_id"
-    ]
-]
-
-
-y_train = similar_data["rating"]
-
-
-
 tree = DecisionTreeRegressor(
     max_depth=15,
     random_state=42
-)
-
-
-tree.fit(
-    X_train,
-    y_train
 )
 
 
@@ -200,24 +148,58 @@ else:
     print(matches.head(10))
 
 
-    movie_id = int(
-        input(
-            "\nEnter movie_id: "
+    matches = matches.reset_index(drop=True)
+
+    if len(matches) == 1:
+        movie_id = int(matches.loc[0, "movie_id"])
+        print(f"\nSelected movie: {matches.loc[0, 'title']}")
+    else:
+        print("\nMultiple matches found:")
+        for idx, row in matches.iterrows():
+            print(f"{idx + 1}. {row['title']}")
+
+        selection = int(
+            input(
+                f"\nEnter selection number (1-{len(matches)}): "
+            )
         )
-    )
+        movie_id = int(matches.loc[selection - 1, "movie_id"])
 
+    target_ratings = df[
+        df["movie_id"] == movie_id
+    ][
+        ["user_id", "rating"]
+    ].rename(columns={"rating": "target_rating"})
 
-    prediction = tree.predict(
-        [
-            [
-                999999,
-                movie_id
-            ]
-        ]
-    )
+    train_data = comparison.merge(
+        target_ratings,
+        left_index=True,
+        right_on="user_id"
+    ).dropna()
 
+    X_train = train_data[seed_ids]
+    y_train = train_data["target_rating"]
 
     print(
-        "\nPredicted rating:",
-        round(prediction[0],2)
+        f"\nTraining data: {len(X_train)} users with all seed movie ratings and target movie rating"
     )
+
+    if len(X_train) == 0:
+        print("Not enough training data for this movie.")
+    else:
+        tree.fit(
+            X_train,
+            y_train
+        )
+
+        X_test = pd.DataFrame(
+            user_vector,
+            columns=seed_ids
+        )
+
+        prediction = tree.predict(X_test)
+
+        print(
+            "\nPredicted rating:",
+            round(prediction[0], 2)
+        )
