@@ -1,0 +1,31 @@
+movie_id,title,predicted_rating,n_train_users
+168,Monty Python and the Holy Grail (1974),4.8,309
+79,"Fugitive, The (1993)",4.733333333333333,332
+96,Terminator 2: Judgment Day (1991),4.625,292
+22,Braveheart (1995),4.551724137931035,295
+313,Titanic (1997),4.461538461538462,344
+173,"Princess Bride, The (1987)",4.4,320
+195,"Terminator, The (1984)",4.294117647058823,298
+98,"Silence of the Lambs, The (1991)",4.282608695652174,386
+174,Raiders of the Lost Ark (1981),4.2,415
+7,Twelve Monkeys (1995),4.066666666666666,390
+127,"Godfather, The (1972)",3.949275362318841,411
+210,Indiana Jones and the Last Crusade (1989),3.909090909090909,326
+276,Leaving Las Vegas (1995),3.875,297
+237,Jerry Maguire (1996),3.725,383
+423,E.T. the Extra-Terrestrial (1982),3.7045454545454546,296
+151,Willy Wonka and the Chocolate Factory (1971),3.6666666666666665,324
+9,Dead Man Walking (1995),3.634920634920635,296
+222,Star Trek: First Contact (1996),3.6,364
+302,L.A. Confidential (1997),3.533333333333333,291
+56,Pulp Fiction (1994),3.4871794871794872,390
+204,Back to the Future (1985),3.4615384615384617,345
+748,"Saint, The (1997)",3.4,315
+318,Schindler's List (1993),3.2666666666666666,294
+69,Forrest Gump (1994),3.25,318
+269,"Full Monty, The (1997)",3.25,311
+257,Men in Black (1997),3.0,302
+328,Conspiracy Theory (1997),2.857142857142857,294
+172,"Empire Strikes Back, The (1980)",2.8333333333333335,365
+117,"Rock, The (1996)",2.8,377
+405,Mission: Impossible (1996),2.6666666666666665,344

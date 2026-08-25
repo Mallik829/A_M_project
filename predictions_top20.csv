@@ -1,0 +1,31 @@
+movie_id,title,predicted_rating,n_train_users
+56,Pulp Fiction (1994),5.0,390
+222,Star Trek: First Contact (1996),5.0,364
+151,Willy Wonka and the Chocolate Factory (1971),5.0,324
+98,"Silence of the Lambs, The (1991)",4.0,386
+210,Indiana Jones and the Last Crusade (1989),4.0,326
+174,Raiders of the Lost Ark (1981),4.0,415
+328,Conspiracy Theory (1997),4.0,294
+168,Monty Python and the Holy Grail (1974),4.0,309
+748,"Saint, The (1997)",4.0,315
+69,Forrest Gump (1994),3.0,318
+172,"Empire Strikes Back, The (1980)",3.0,365
+276,Leaving Las Vegas (1995),3.0,297
+173,"Princess Bride, The (1987)",3.0,320
+237,Jerry Maguire (1996),3.0,383
+22,Braveheart (1995),2.0,295
+195,"Terminator, The (1984)",2.0,298
+9,Dead Man Walking (1995),2.0,296
+257,Men in Black (1997),2.0,302
+313,Titanic (1997),2.0,344
+79,"Fugitive, The (1993)",2.0,332
+127,"Godfather, The (1972)",2.0,411
+7,Twelve Monkeys (1995),1.0,390
+204,Back to the Future (1985),1.0,345
+405,Mission: Impossible (1996),1.0,344
+117,"Rock, The (1996)",1.0,377
+269,"Full Monty, The (1997)",1.0,311
+318,Schindler's List (1993),1.0,294
+423,E.T. the Extra-Terrestrial (1982),1.0,296
+302,L.A. Confidential (1997),1.0,291
+96,Terminator 2: Judgment Day (1991),1.0,292
