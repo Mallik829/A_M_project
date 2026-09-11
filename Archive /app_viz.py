@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Load data
 ratings = pd.read_csv(
-    "ml-100k/u.data",
+     "Data/ml-100k/u.data",
     sep="\t",
     names=[
         "user_id",
@@ -16,7 +16,7 @@ ratings = pd.read_csv(
 )
 
 movies = pd.read_csv(
-    "ml-100k/u.item",
+    "Data/ml-100k/u.item",
     sep="|",
     encoding="latin-1",
     header=None,
