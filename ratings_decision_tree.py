@@ -3,6 +3,7 @@ import numpy as np
 
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_absolute_error
 
 
 # -------------------------------------------------
@@ -368,9 +369,15 @@ X_train = train_data[seed_ids + [
 ]].copy()
 
 X_train.columns = feature_columns
+<<<<<<< HEAD
 
 y_train = train_data["target_rating"]
 
+=======
+
+y_train = train_data["target_rating"]
+
+>>>>>>> cc30a266d7bad2a7a0013e812c4a7a7b2d78f95f
 print(
         f"\nTraining data: {len(X_train)} users with all seed movie ratings and target movie rating"
     )
@@ -405,3 +412,92 @@ else:
             "\nPredicted rating:",
             round(prediction[0], 2)
         )
+
+
+# -------------------------------------------------
+# Bulk predict top-20 movies (no Streamlit)
+# -------------------------------------------------
+
+print("\nRunning bulk predictions for top 20 popular movies (excluding your seed movies)...")
+
+# Choose top 20 candidate movies excluding the seed set
+candidate_movies = (
+    top_movies[~top_movies["movie_id"].isin(seed_ids)]
+    .head(20)
+)
+
+results = []
+
+for _, row in candidate_movies.iterrows():
+
+    mid = int(row["movie_id"])
+    title = row["title"]
+
+    target_ratings = df[
+        df["movie_id"] == mid
+    ][["user_id", "rating"]].rename(columns={"rating": "target_rating"})
+
+    train_data = comparison.merge(
+        target_ratings,
+        left_index=True,
+        right_on="user_id"
+    ).dropna()
+
+    X_train = train_data[seed_ids + [
+        "age",
+        "gender_encoded",
+        "occupation_encoded"
+    ]].copy()
+
+    feature_columns = [str(movie_id) for movie_id in seed_ids] + [
+        "age",
+        "gender_encoded",
+        "occupation_encoded"
+    ]
+
+    if len(X_train) > 0:
+        X_train.columns = feature_columns
+        y_train = train_data["target_rating"]
+
+        model = DecisionTreeRegressor(max_depth=15, random_state=42)
+        model.fit(X_train, y_train)
+
+        X_test = pd.DataFrame([user_vector[0]], columns=feature_columns)
+        pred = model.predict(X_test)[0]
+        pred = max(1, min(5, pred))
+        n_train = len(X_train)
+
+    else:
+        pred = float("nan")
+        n_train = 0
+
+    results.append({
+        "movie_id": mid,
+        "title": title,
+        "predicted_rating": pred,
+        "n_train_users": n_train
+    })
+
+results_df = pd.DataFrame(results).sort_values("predicted_rating", ascending=False).reset_index(drop=True)
+
+print("\nPredicted ratings (top 20):")
+print(results_df[["title", "predicted_rating", "n_train_users"]].to_string(index=False))
+
+# Placeholder for your actual ratings for these 20 movies.
+# Replace the None entries with integers 1-5 (or 0 if you haven't seen it).
+# The list should be in the same order as the printed predictions above.
+actual_ratings_20 = [None] * len(results_df)  # <-- fill this list with your actual ratings
+
+# Compute MAE ignoring None or 0 (0 means not seen)
+valid_mask = [
+    (a is not None) and (a != 0)
+    for a in actual_ratings_20
+]
+
+if any(valid_mask):
+    preds = results_df.loc[valid_mask, "predicted_rating"].astype(float).values
+    acts = np.array([a for a, v in zip(actual_ratings_20, valid_mask) if v], dtype=float)
+    mae = mean_absolute_error(acts, preds)
+    print(f"\nMean Absolute Error (on your provided ratings): {mae:.3f}")
+else:
+    print("\nNo actual ratings provided for MAE calculation. Fill `actual_ratings_20` to compute MAE.")
