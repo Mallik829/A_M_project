@@ -369,15 +369,9 @@ X_train = train_data[seed_ids + [
 ]].copy()
 
 X_train.columns = feature_columns
-<<<<<<< HEAD
 
 y_train = train_data["target_rating"]
 
-=======
-
-y_train = train_data["target_rating"]
-
->>>>>>> cc30a266d7bad2a7a0013e812c4a7a7b2d78f95f
 print(
         f"\nTraining data: {len(X_train)} users with all seed movie ratings and target movie rating"
     )
