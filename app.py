@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeRegressor
 # -------------------------------------------------
 
 ratings = pd.read_csv(
-    "Data/ml-100k/u.data",
+    "../Movie_Data/ml-100k/u.data",
     sep="\t",
     names=[
         "user_id",
@@ -20,7 +20,7 @@ ratings = pd.read_csv(
 )
 
 movies = pd.read_csv(
-    "Data/ml-100k/u.item",
+    "../Movie_Data/ml-100k/u.item",
     sep="|",
     encoding="latin-1",
     header=None,
@@ -32,7 +32,7 @@ movies = pd.read_csv(
 )
 
 users = pd.read_csv(
-    "Data/ml-100k/u.user",
+    "../Movie_Data/ml-100k/u.user",
     sep="|",
     names=[
         "user_id",
