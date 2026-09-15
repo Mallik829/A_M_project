@@ -147,7 +147,7 @@ comparison = comparison.join(
     user_features
 )
 
-    else:
+
 
 # -------------------------------------------------
 # Streamlit APP
