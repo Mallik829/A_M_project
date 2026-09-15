@@ -49,3 +49,5 @@ If the notebook's model is ready to become reusable application code → `rating
 If you're specifically working on deployment/cloud → `Archive/app_cloud.py`.
 
 If you're looking at old code → `Archive/`.
+
+## predict_top30 file is a application file that calculates the mean absolute error from user predictions and model generated prediction  
